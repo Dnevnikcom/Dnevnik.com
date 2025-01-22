@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dnevnik.com</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="https://i.ibb.co/pX1xvLQ/unnamed-3.jpg" alt="Логотип">
+            </div>
+            <div class="nav-links">
+                <a href="#">О компании</a>
+                <a href="#">Администрирование</a>
+                <a href="#" onclick="openSupportModal()">Поддержка</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn-login">Войти</button>
+                <button class="btn-connect" onclick="openModal()">Подключить ОО</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Support Portal Modal -->
+    <div class="modal" id="supportModal">
+        <div class="modal-content support-portal">
+            <button class="close-modal" onclick="closeSupportModal()">&times;</button>
+            <h2>Портал службы поддержки</h2>
+            
+            <div class="support-sections">
+                <div class="support-section">
+                    <h3>Часто задаваемые вопросы</h3>
+                    <ul class="faq-list">
+                        <li><a href="#">Как подключить образовательную организацию?</a></li>
+                        <li><a href="#">Как восстановить доступ?</a></li>
+                        <li><a href="#">Как добавить ученика в класс?</a></li>
+                        <li><a href="#">Как выставить оценки?</a></li>
+                    </ul>
+                </div>
+
+                <div class="support-section">
+                    <h3>Создать обращение</h3>
+                    <form class="support-form" onsubmit="handleSupportSubmit(event)">
+                        <div class="form-group">
+                            <label for="supportTopic">Тема обращения*</label>
+                            <select id="supportTopic" required>
+                                <option value="">Выберите тему</option>
+                                <option value="technical">Технические проблемы</option>
+                                <option value="access">Проблемы с доступом</option>
+                                <option value="functionality">Вопросы по функционалу</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supportEmail">Email*</label>
+                            <input type="email" id="supportEmail" required placeholder="Введите ваш email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supportMessage">Описание проблемы*</label>
+                            <textarea id="supportMessage" required placeholder="Опишите вашу проблему" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supportFile">Прикрепить файл</label>
+                            <input type="file" id="supportFile" accept=".jpg,.png,.pdf,.doc,.docx">
+                            <small>Максимальный размер файла: 10 МБ</small>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Отправить обращение</button>
+                    </form>
+                </div>
+
+                <div class="support-section">
+                    <h3>Контакты поддержки</h3>
+                    <div class="support-contacts">
+                        <p><strong>Телефон:</strong> 8-800-555-35-35</p>
+                        <p><strong>Email:</strong> support@dnevnik.ru</p>
+                        <p><strong>Время работы:</strong> Пн-Пт, 9:00 - 18:00 МСК</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Modal -->
+    <div class="modal" id="connectModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <form class="connect-form" onsubmit="handleSubmit(event)">
+                <h2>Подключение образовательной организации</h2>
+                
+                <div class="form-group">
+                    <label for="region">Регион*</label>
+                    <select id="region" required>
+                        <option value="">Выберите регион</option>
+                        <option value="moscow">Москва</option>
+                        <option value="spb">Санкт-Петербург</option>
+                        <option value="other">Другой регион</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="organization">Название образовательной организации*</label>
+                    <input type="text" id="organization" required placeholder="Введите название">
+                </div>
+
+                <div class="form-group">
+                    <label for="inn">ИНН*</label>
+                    <input type="text" id="inn" required placeholder="Введите ИНН организации" pattern="\d{10}|\d{12}" title="ИНН должен содержать 10 или 12 цифр" maxlength="12">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">ФИО ответственного лица*</label>
+                    <input type="text" id="name" required placeholder="Введите ФИО">
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Должность*</label>
+                    <input type="text" id="position" required placeholder="Введите должность">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" required placeholder="Введите email">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Телефон*</label>
+                    <input type="tel" id="phone" required placeholder="+7 (___) ___-__-__">
+                </div>
+
+                <button type="submit" class="submit-btn">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="platform-description">
+    </div>
+
+    <main>
+        <div class="slider">
+            <button class="slider-btn prev">&#10094;</button>
+            <div class="slide active">
+                <div class="slide-content">
+                    <h1>Преподавателям</h1>
+                    <p>Получите доступ к передовым технологиям автоматизации учебного процесса, инструментам онлайн - образования и современным способам общения с родителями.</p>
+                    <button class="btn-details">Подробнее</button>
+                </div>
+                <div class="slide-image">
+                    <img src="https://i.ibb.co/2nJCm6x/teacher.png" alt="Учитель">
+                </div>
+            </div>
+            <button class="slider-btn next">&#10095;</button>
+        </div>
+
+        <div class="user-categories">
+            <div class="category-card">
+                <img src="teacher.jpg" alt="Преподавателям">
+                <span>Преподавателям</span>
+            </div>
+            <div class="category-card">
+                <img src="parents.jpg" alt="Родителям">
+                <span>Родителям</span>
+            </div>
+            <div class="category-card">
+                <img src="students.jpg" alt="Учащимся">
+                <span>Учащимся</span>
+            </div>
+            <div class="category-card">
+                <img src="government.jpg" alt="Госорганам">
+                <span>Госорганам</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>О компании</h3>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Новости</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Возможности</h3>
+                <ul>
+                    <li><a href="#">Преподавателям</a></li>
+                    <li><a href="#">Родителям</a></li>
+                    <li><a href="#">Учащимся</a></li>
+                    <li><a href="#">Госорганам</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Поддержка</h3>
+                <a href="#" class="support-link" onclick="openSupportModal()">Портал службы поддержки</a>
+                <div class="language-selector">
+                    <select>
+                        <option value="ru">Русский</option>
+                    </select>
+                </div>
+                <button class="btn-connect" onclick="openModal()">Подключить ОО</button>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-icon telegram"></a>
+                <a href="#" class="social-icon vk"></a>
+                <a href="#" class="social-icon ok"></a>
+                <a href="#" class="social-icon youtube"></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('connectModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('connectModal').classList.remove('active');
+        }
+
+        function openSupportModal() {
+            document.getElementById('supportModal').classList.add('active');
+        }
+
+        function closeSupportModal() {
+            document.getElementById('supportModal').classList.remove('active');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Заявка успешно отправлена!');
+            closeModal();
+        }
+
+        function handleSupportSubmit(event) {
+            event.preventDefault();
+            alert('Ваше обращение успешно отправлено! Мы ответим вам в ближайшее время.');
+            closeSupportModal();
+        }
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(event) {
+                if (event.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + ') ' + (x[3] ? x[3] + '-' : '') + (x[4] ? x[4] + '-' : '') + x[5];
+        });
+
+        // INN validation - only allow numbers
+        document.getElementById('inn').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    </script>
+</body>
+</html>
